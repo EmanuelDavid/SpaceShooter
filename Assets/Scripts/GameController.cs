@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
-    public GameObject hazard;
+    public GameObject[] hazards;
     public Vector3 asteroidFrom;
     public float startWait;
     public float waveWait;
@@ -53,6 +53,7 @@ public class GameController : MonoBehaviour
         {
             for (int i = 0; i < hazardCount; i++)
             {
+                GameObject hazard = hazards[Random.Range(0,hazards.Length)];
                 Vector3 spawnPosition = new Vector3(Random.Range(-asteroidFrom.x, asteroidFrom.x), asteroidFrom.y, asteroidFrom.z);
                 Quaternion spawnRotation = Quaternion.identity;
                 Instantiate(hazard, spawnPosition, spawnRotation);
