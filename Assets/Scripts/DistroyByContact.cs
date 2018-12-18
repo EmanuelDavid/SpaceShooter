@@ -27,15 +27,18 @@ public class DistroyByContact : MonoBehaviour
             return;
         }
 
+        _gameController.IncreaseAsteroidDestroied();
+
+        Instantiate(explosion, transform.position, transform.rotation);
+
         if (other.tag == "Player")
         {
             Instantiate(playerExplosion, other.transform.position, other.transform.rotation);
             _gameController.GameOver();
         }
 
-        _gameController.IncreaseAsteroidDestroied();
 
-        Instantiate(explosion, transform.position, transform.rotation);
+
         Destroy(other.gameObject);
         Destroy(gameObject);
     }
