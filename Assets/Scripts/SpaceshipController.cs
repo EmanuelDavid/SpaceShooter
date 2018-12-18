@@ -17,6 +17,7 @@ public class SpaceshipController : MonoBehaviour
     public GameObject projectile;
     public float fireDelta = 0.15F;
     public bool IsMachineGun;
+    public ShootAreea shootAreea;
 
     private int _nrOfShoots = 0;
     private float myTime = 0.0F;
@@ -65,9 +66,9 @@ public class SpaceshipController : MonoBehaviour
 
         myTime = myTime + Time.deltaTime;
 
-        var shootType = IsMachineGun ? MachineGun() : NormalShoot();
+       // var shootType = IsMachineGun ? MachineGun() : NormalShoot();
 
-        if (shootType && (myTime - fireDelta) > 0)
+        if (shootAreea.CanFire() && (myTime - fireDelta) > 0)
         {
             Instantiate(projectile, shotSpan.position, shotSpan.rotation);
             _shotSound.Play();
@@ -79,27 +80,27 @@ public class SpaceshipController : MonoBehaviour
         }
     }
 
-    private bool MachineGun()
-    {
-        if (Input.touchCount > 0)
-        {
-            return true;
-        }
-        return false;
-    }
+    //private bool MachineGun()
+    //{
+    //    if (Input.touchCount > 0)
+    //    {
+    //        return true;
+    //    }
+    //    return false;
+    //}
 
-    private bool NormalShoot()
-    {
-        if (MachineGun())
-        {
-            var touchPase = Input.GetTouch(0).phase;
-            if (touchPase == TouchPhase.Began)
-            {
-                return true;
-            }
-        }
-        return false;
-    }
+    //private bool NormalShoot()
+    //{
+    //    if (MachineGun())
+    //    {
+    //        var touchPase = Input.GetTouch(0).phase;
+    //        if (touchPase == TouchPhase.Began)
+    //        {
+    //            return true;
+    //        }
+    //    }
+    //    return false;
+    //}
 
     //Used to calibrate the Input.acceleration input
     void CalibrateAccelerometer()

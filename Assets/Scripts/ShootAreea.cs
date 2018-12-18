@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class ShootAreea : MonoBehaviour
+public class ShootAreea : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     private bool touched;
     private int pointerID;
@@ -12,6 +10,7 @@ public class ShootAreea : MonoBehaviour
     void Awake()
     {
         touched = false;
+        pointerID = int.MaxValue;
     }
 
     public void OnPointerDown(PointerEventData data)
@@ -21,6 +20,7 @@ public class ShootAreea : MonoBehaviour
             touched = true;
             pointerID = data.pointerId;
             canFire = true;
+
         }
     }
 
@@ -30,11 +30,17 @@ public class ShootAreea : MonoBehaviour
         {
             canFire = false;
             touched = false;
+            pointerID = int.MaxValue;
         }
     }
 
     public bool CanFire()
     {
         return canFire;
+    }
+
+    public int GetShootPointerId()
+    {
+        return pointerID;
     }
 }

@@ -1,19 +1,25 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
+using System.Linq;
+
 public class GetTouchPoint : MonoBehaviour
 {
     public Camera camera;
+    public ShootAreea shootArea;
 
     void Update()
     {
         // Handle screen touches.
         if (Input.touchCount > 0)
         {
-            Touch touch = Input.GetTouch(0);
+            var shootAreeaPointerId = shootArea.GetShootPointerId();
+            Touch[] touches = Input.touches;
 
-            // Move the player if the screen has the finger moving.
-            if (touch.phase == TouchPhase.Moved)
+            var dragTouch = touches.FirstOrDefault(t => t.fingerId != shootAreeaPointerId  && t.phase == TouchPhase.Moved);
+
+            if (dragTouch.position.x != 0f && dragTouch.position.y != 0f && dragTouch.phase == TouchPhase.Moved)
             {
-                Vector2 touchPos = touch.position;
+                Vector2 touchPos = dragTouch.position;
 
                 Vector3 touchPosinWorldSpace = camera.ScreenToWorldPoint(new Vector3(touchPos.x, touchPos.y, 5));
 

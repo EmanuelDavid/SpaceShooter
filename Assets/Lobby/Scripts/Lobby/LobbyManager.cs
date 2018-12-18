@@ -9,7 +9,9 @@ using System.Collections;
 
 namespace Prototype.NetworkLobby
 {
+#pragma warning disable CS0618 // Type or member is obsolete
     public class LobbyManager : NetworkLobbyManager
+#pragma warning restore CS0618 // Type or member is obsolete
     {
         static short MsgKicked = MsgType.Highest + 1;
 
