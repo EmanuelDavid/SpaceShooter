@@ -3,6 +3,7 @@
 public class DistroyByContact : MonoBehaviour
 {
     public GameObject explosion;
+    public GameObject boltExplosion;
     public GameObject playerExplosion;
 
     private GameController _gameController;
@@ -22,24 +23,30 @@ public class DistroyByContact : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Boundary")
+        if (other.CompareTag("Boundary") || other.CompareTag("Enemy"))
         {
             return;
         }
 
         _gameController.IncreaseAsteroidDestroied();
 
-        Instantiate(explosion, transform.position, transform.rotation);
+        if (explosion != null)
+        {
+            Instantiate(explosion, transform.position, transform.rotation);
+        }
 
-        if (other.tag == "Player")
+        if (other.CompareTag("Player"))
         {
             Instantiate(playerExplosion, other.transform.position, other.transform.rotation);
+
             _gameController.GameOver();
         }
 
-
-
-        Destroy(other.gameObject);
+        if (other.CompareTag("SpaceShipBolt"))
+        {
+            Instantiate(playerExplosion, other.transform.position, other.transform.rotation);
+        }
         Destroy(gameObject);
+        Destroy(other.gameObject);
     }
 }
